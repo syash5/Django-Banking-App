@@ -1,0 +1,36 @@
+   {% extends 'base.html' %}
+
+
+    {% block content %}
+
+
+    <div class="page-header">
+      <h1 class="text-center"><small>Dena Bank pvt. ltd.</small></h1>
+    </div>
+
+<div class="row">
+
+  <div class="col-xs-12 col-md-8 text-left">
+    <h4><b>Account Name: </b>{{ user.full_name }}</h4>
+    <h4><b>Date of Birth: </b>{{ user.birth_date }}</h4>
+    <h4><b>Gender: </b>{{ user.gender }}</h4>
+    <h4><b>Contact No: </b>{{ user.contact_no }}</h4>
+    <h4><b>Email Address: </b>{{ user.email }}</h4>
+    <h4><b>Address: </b>{{ user.Address }}</h4>
+    <h4><b>Location: </b>{{ user.city }}, {{ user.country }}</h4>
+    <h4><b>Occupation: </b>{{ user.occupation }}</h4>
+  </div>
+  <div class="col-xs-6 col-md-4 text-left">
+    <h4><b>Account Created: </b>{{ user.date_joined|date:'d-m-Y' }}</h4>
+    <h4><b>Account No: </b>{{ user.account_no }}</h4><br><br>
+    <div class="well">
+    <h4 class="card"><b>Account Balance: </b>{{ user.balance }} ₹</h4>
+
+    </div>
+  </div>
+
+</div>
+
+
+
+    {% endblock %}

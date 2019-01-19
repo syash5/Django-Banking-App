@@ -1,0 +1,46 @@
+<html>
+
+    <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        {% load static %}
+        <!--<link rel="stylesheet" href="{% static 'accounts/style.css' %}" type="text/css">-->
+        {% block head%}
+
+        {% endblock %}
+    </head>
+
+    <body>
+    <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">Dena Bank pvt. ltd.</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="/">Home</a></li>
+        {% if request.user.is_authenticated %}
+        <li><a href="{% url 'user_logout' %}">Logout</a></li>
+        <li><a href="{% url 'account_details' %}">Load Account Details</a></li>
+        <li><a href="{% url 'deposit' %}">Deposit</a></li>
+        <li><a href="{% url 'withdrawl' %}">Withdrawl</a></li>
+        {% else %}
+        <li><a href="{% url 'user_login' %}">Login </a></li>
+
+        <li><a href="{% url 'register_view' %}">Create an Account</a></li>
+
+        {% endif %}
+    </ul>
+  </div>
+</nav>
+
+
+    {% block content %}
+
+
+    {% endblock %}
+
+    </body>
+
+</html>

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+
+        {% block content %}
+            <form method="POST">
+                {% csrf_token %}
+
+
+                        <div class="form-group">
+              <label for="transact_variable">deposit or withdrawl:</label>
+              <input type="text" class="form-control" id="transact_variable">
+            </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">your Balance is:</div>
+      <div class="panel-body"> {{ user.balance }}</div>
+    </div>
+
+            <div class="form-group">
+              <label for="amount">amount:</label>
+              <input type="number" class="form-control" id="amount">
+            </div>
+
+                    <button type="submit">Submit</button>
+                </form>
+        {% endblock content %}
