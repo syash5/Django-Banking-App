@@ -80,9 +80,9 @@ def register_view(request):  # Creates a New Account & login New users
             user.save()
             new_user = authenticate(email=user.email, password=password)
             login(request, new_user)
-            messages.success(
-                request,
-                '''Thank You'''.format(new_user.full_name, new_user.account_no))
+            # messages.success(
+            #     request,
+            #     '''Thank You'''.format(new_user.full_name, new_user.account_no))
 
             return redirect("home")
 

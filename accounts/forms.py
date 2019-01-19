@@ -25,6 +25,7 @@ class UserRegistrationForm(UserCreationForm):
     class Meta:
         model = UserProfile
         fields = [
+                  "username",
                   "full_name",
                   "birth_date",
                   "email",
