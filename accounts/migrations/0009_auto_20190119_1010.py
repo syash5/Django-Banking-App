@@ -6,7 +6,7 @@ import django.utils.timezone
 
 
 class Migration(migrations.Migration):
-
+    atomic = False
     dependencies = [
         ('auth', '0009_alter_user_last_name_max_length'),
         ('accounts', '0008_auto_20190117_2043'),

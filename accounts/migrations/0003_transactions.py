@@ -6,7 +6,7 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
+    atomic = False
     dependencies = [
         ('accounts', '0002_auto_20190112_0635'),
     ]

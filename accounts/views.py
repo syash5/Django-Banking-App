@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from accounts.forms import UserForm
 from accounts.models import UserProfile
 from accounts.models import Transactions
-from accounts.models import Accounts
+
 # Create your views here.
 from django.contrib.auth import authenticate
 from django.shortcuts import render, get_object_or_404
@@ -63,7 +63,7 @@ def user_logout(request):
 
 
 
-def register_view(request):  # Creates a New Account & login New users
+def register_view(request):
     if request.user.is_authenticated:
         return redirect("home")
     else:
@@ -80,9 +80,6 @@ def register_view(request):  # Creates a New Account & login New users
             user.save()
             new_user = authenticate(email=user.email, password=password)
             login(request, new_user)
-            # messages.success(
-            #     request,
-            #     '''Thank You'''.format(new_user.full_name, new_user.account_no))
 
             return redirect("home")
 
@@ -92,47 +89,80 @@ def register_view(request):  # Creates a New Account & login New users
 
 
 
+# def deposit(request):
+#     if not request.user.is_authenticated:
+#         return render(request, "accounts/login.html")
+#     else:
+#         form = Deposit_form(request.POST or None,
+#                             request.FILES or None)
+#
+#         if form.is_valid():
+#             request.user = form.save(commit= False)
+#             deposit.user = request.user
+#             deposit.user.balance += deposit.user.amount
+#             deposit.user.save()
+#             deposit.save()
+#             return render(request, "accounts/account_details.html")
+#
+#     context = {
+#         "form" : form
+#     }
+#     return render(request, "accounts/form.html", context)
+
+
 def deposit(request):
     if not request.user.is_authenticated:
-        return render(request, "accounts/login.html")
+        raise Http404
     else:
+        title = "Deposit"
         form = Deposit_form(request.POST or None,
                             request.FILES or None)
 
         if form.is_valid():
-            user = form.save(commit= False)
+            deposit = form.save(commit=False)
             deposit.user = request.user
-            deposit.user.balance += deposit.user.amount
+            # adds users deposit to balance.
+            deposit.user.balance += deposit.amount
             deposit.user.save()
             deposit.save()
-            return render(request, "accounts/account_details.html")
+            messages.success(request, 'You Have Deposited {} $.'
+                             .format(deposit.amount))
+            return redirect("home")
 
-    context = {
-        "form" : form
-    }
-    return render(request, "accounts/form.html", context)
+        context = {
+                    "title": title,
+                    "form": form
+                  }
+        return render(request, "accounts/form.html", context)
 
 
 def withdrawl(request):
     if not request.user.is_authenticated:
-        return render(request, "accounts/login.html")
+        raise Http404
     else:
-        form = Withdrawl_form(request.POST or None,
-                            request.FILES or None)
+        title = "Withdrawl"
+        form = Withdrawl_form(request.POST or None)
 
         if form.is_valid():
-            user = form.save(commit= False)
-            deposit.user = request.user
-            deposit.user.balance -= deposit.user.amount
-            deposit.user.save()
-            deposit.save()
-            return render(request, "accounts/account_details.html")
+            withdrawal = form.save(commit=False)
+            withdrawal.user = request.user
 
-    context = {
-        "form" : form
-    }
-    return render(request, "accounts/form.html", context)
+            if withdrawal.user.balance >= withdrawal.amount:
 
+                withdrawal.user.balance -= withdrawal.amount
+                withdrawal.user.save()
+                withdrawal.save()
+                return redirect("home")
+
+            else:
+                return render(request, "Error You Can't Withdraw Please Return To Previous Page"
+                )
+
+        context = {
+                    "title": title,
+                    "form": form
+                  }
+        return render(request, "accounts/form.html", context)
 
 
 @login_required(login_url="/login/")
@@ -187,9 +217,7 @@ def account_details(request):
 #             user.save()
 #             new_user = authenticate(email=user.email, password=password)
 #             login(request, new_user)
-#             messages.success(
-#                 request,
-#                 '''Thank You  '''.format(new_user.full_name, new_user.account_no))
+
 #
 #             return redirect("home")
 #
@@ -204,6 +232,28 @@ def account_details(request):
 #
 #
 
+
+
+# def withdrawl(request):
+#     if not request.user.is_authenticated:
+#         return Http404
+#     else:
+#         title = "Withdrawl"
+#         form = Withdrawl_form(request.POST or None,
+#                             request.FILES or None)
+#         if form.is_valid():
+#             request.user = form.save(commit= False)
+#             withdrawl.user = request.user
+#             withdrawl.user.balance -= withdrawl.amount
+#             withdrawl.user.save()
+#             withdrawl.save()
+#             return render(request, "accounts/account_details.html")
+#
+#     context = {
+#         "title" : title,
+#         "form" : form
+#     }
+#     return render(request, "accounts/form.html", context)
 
 
 # def emp(request):
