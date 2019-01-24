@@ -28,13 +28,13 @@ class UserProfile(AbstractUser):
     country = models.CharField(max_length=256)
     nationality = models.CharField(max_length=256)
     occupation = models.CharField(max_length=256)
-    account_no = models.PositiveIntegerField(
-        unique=True,default=1,
-        validators=[
-            MinValueValidator(10000000),
-            MaxValueValidator(99999999)
-        ]
-    )
+    # account_no = models.PositiveIntegerField(
+    #     unique=True,
+    #     validators=[
+    #         MinValueValidator(10000000),
+    #         MaxValueValidator(99999999)
+    #         ]
+    #     )
     balance = models.DecimalField(
         default=0,
         max_digits=12,

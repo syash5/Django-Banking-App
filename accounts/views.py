@@ -63,7 +63,34 @@ def user_logout(request):
 
 
 
-def register_view(request):
+
+#
+# def register_view(request):
+#     if request.user.is_authenticated:
+#         return redirect("home")
+#     else:
+#         title = "Create a Bank Account"
+#         form = UserRegistrationForm(
+#             request.POST or None,
+#             request.FILES or None
+#             )
+#
+#         if form.is_valid():
+#             user = form.save(commit=False)
+#             password = form.cleaned_data.get("password1")
+#             user.set_password(password)
+#             user.save()
+#             new_user = authenticate(email=user.email, password=password)
+#             login(request, new_user)
+#
+#             return redirect("home")
+#
+#         context = {"title": title, "form": form}
+#
+#         return render(request, "accounts/form.html", context)
+
+
+def register_view(request):  
     if request.user.is_authenticated:
         return redirect("home")
     else:
@@ -86,8 +113,6 @@ def register_view(request):
         context = {"title": title, "form": form}
 
         return render(request, "accounts/form.html", context)
-
-
 
 # def deposit(request):
 #     if not request.user.is_authenticated:
